@@ -3,14 +3,30 @@ import styled from 'styled-components';
 
 function Counter() {
     const [count, setCount] = useState(0);
+    const [error, setError] = useState('');
+
+    function increase() {
+        setCount(count + 1);
+        setError('');
+    }
+
+    function decrease() {
+        if (count > 0) {
+            setCount(count - 1);
+            setError('');
+        } else {
+            setError('Cannot decrease below 0');
+        }
+    }
     return (
         <Container>
             <Heading>Counter App</Heading>
             <CounterElement>{count}</CounterElement>
             <ButtonContainer>
-                <Button onClick={() => setCount(count+1)}>Increase</Button>
-                <Button onClick={() => setCount(count-1)}>Decrease</Button>
+                <Button onClick={increase}>Increase</Button>
+                <Button onClick={decrease}>Decrease</Button>
             </ButtonContainer>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
         </Container>
     )
 }
@@ -52,4 +68,9 @@ const Button = styled.button`
     &:hover {
         background-color: #0056b3;
     }
+`
+
+const ErrorMessage = styled.p`
+    color: red;
+    margin-top: 10px;
 `
